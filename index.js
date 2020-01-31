@@ -1,10 +1,17 @@
 const readline = require('readline-sync')
 
-function start(){
+const robots = {
+    text: require('./robots/text.js')
+}
+
+//função assincrona para aguardar a execução do robo.
+async function start(){
     const content = {}
     
     content.searchTerm = askAndReturnSearchTerm()
     content.prefix = askAndReturnPrefix()
+    
+    await robots.text(content)
     
     function askAndReturnSearchTerm() {
         return readline.question('Type a Wikipedia Search Term: ')
@@ -15,12 +22,11 @@ function start(){
         const selectedPrefixIndex = readline.keyInSelect(prefixes, 'Choose one option:') 
         const selectedPrefixText = prefixes[selectedPrefixIndex]
         
-        console.log(selectedPrefixIndex)
-        console.log(selectedPrefixText)
+        return selectedPrefixText
     }
     
     console.log(content)
-   
+  
 }
 
 start()
